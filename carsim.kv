@@ -1,0 +1,88 @@
+<CarView>:
+    cols: 4
+
+    Image:
+        source: 'car-wheel.png'
+        pos: self.parent.pos
+        size_hint: .5,.4
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: root.rearLeft
+                origin: self.center
+        canvas.after:
+            PopMatrix
+    Label:
+        text: '{} Engine RPM'.format(root.currentEngineRpm)
+    Label:
+        text: '{} Wheel RPM'.format(root.currentWheelRpm)
+    Image:
+        source: 'car-wheel.png'
+        pos: self.parent.pos
+        size_hint: .5,.4
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: root.frontLeft
+                origin: self.center
+        canvas.after:
+            PopMatrix
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Refuel'
+            on_release: root.theCar.theEngine.theTank.refuel()
+        ProgressBar:
+            max : root.theCar.theEngine.theTank.capacity
+            value: root.fuelMeter
+    GridLayout:
+        cols: 1
+        Button:
+            text: '+'
+            on_release: root.theCar.theEngine.theGearbox.shiftUp()
+        Label:
+            text: 'Gear: {}'.format(root.currentGear)
+        Button:
+            text: '-'
+            on_release: root.theCar.theEngine.theGearbox.shiftDown()
+    Label:
+        text: 'Gearbox'
+    Label:
+        text: 'Engine'
+    Image:
+        source: 'car-wheel.png'
+        pos: self.parent.pos
+        size_hint: .5,.4
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: root.rearRight
+                origin: self.center
+        canvas.after:
+            PopMatrix
+    ToggleButton:
+        text: 'Clutch'
+        state: 'down'
+        on_state: root.theCar.theEngine.theGearbox.clutchEngaged = not root.theCar.theEngine.theGearbox.clutchEngaged
+    Slider
+        id: slider
+        min: 0
+        max: 1
+        step: 0.01
+        orientation: 'vertical'
+        on_touch_up: root.theCar.theEngine.throttlePosition = slider.value
+    Image:
+        source: 'car-wheel.png'
+        pos: self.parent.pos
+        size_hint: .5,.4
+        canvas.before:
+            PushMatrix
+            Rotate:
+                axis: 0,0,1
+                angle: root.frontRight
+                origin: self.center
+        canvas.after:
+            PopMatrix
