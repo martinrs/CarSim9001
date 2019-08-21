@@ -1,5 +1,5 @@
 import unittest
-import model
+import model_done as model
 
 class TankTester(unittest.TestCase):
 
@@ -29,6 +29,77 @@ class TankTester(unittest.TestCase):
         self.tank.remove(50)
         self.tank.refuel()
         self.assertEqual(self.tank.capacity, 100)
+
+class WheelTester(unittest.TestCase):
+
+    def setUp(self):
+        self.wheel = model.Wheel()
+
+    def testInit(self):
+        self.assertIsInstance(self.wheel.orientation, int)
+        for i in range(10):
+            self.assertTrue(self.wheel.orientation >= 0 and self.wheel.orientation <= 360, 'Wheel position out of bounds')
+
+    def testRotate(self):
+        #self.wheel.orientation = 0
+        beforeRot = self.wheel.orientation
+        self.wheel.rotate(1)
+        self.assertEqual(beforeRot, self.wheel.orientation)
+        beforeRot = self.wheel.orientation
+        self.wheel.rotate(0.5)
+        self.assertEqual((beforeRot + (0.5 * 360)) % 360, self.wheel.orientation)
+        beforeRot = self.wheel.orientation
+        self.wheel.rotate(2.5)
+        self.assertEqual((beforeRot + (2.5 * 360)) % 360, self.wheel.orientation)
+
+class CarTester(unittest.TestCase):
+
+    def setUp(self):
+        self.car = model.Car()
+
+    def testInit(self):
+        self.assertIsInstance(self.car.theEngine, model.Engine)
+
+class EngineTester(unittest.TestCase):
+
+    def setUp(self):
+        self.engine = model.Engine()
+
+    def testInit(self):
+        self.assertIsInstance(self.engine.theGearbox, model.Gearbox)
+        self.assertIsInstance(self.engine.theTank, model.Tank)
+        self.assertEqual(self.engine.maxRpm, 100)
+        self.assertEqual(self.engine.currentRpm, 0)
+        self.assertEqual(self.engine.throttlePosition, 0)
+        self.assertEqual(self.engine.consumptionConstant, 0.0025)
+
+    def testUpdateModel(self):
+        # Test nul throttle
+        self.engine.updateModel(60)
+        self.assertEqual(self.engine.currentRpm, 0)
+        # Test rpm og forbrug med throttle
+        self.engine.throttlePosition = 0.5
+        self.engine.updateModel(60)
+        self.assertEqual(self.engine.currentRpm, 50)
+        self.assertEqual(self.engine.theTank.contents, 99.875)
+        # Test korrekt rotation af gearbox
+        self.engine.theGearbox.wheels['frontLeft'].orientation = 0
+        self.engine.theGearbox.currentGear = 5
+        self.engine.theGearbox.clutchEngaged = True
+        self.engine.updateModel(1)
+        self.assertEqual(self.engine.theGearbox.wheels['frontLeft'].orientation, 60)
+        # Gentag tests med tom tank
+        self.engine.theTank.contents = 0
+        # Test rpm med throttle
+        self.engine.throttlePosition = 0.5
+        self.engine.updateModel(60)
+        self.assertEqual(self.engine.currentRpm, 0)
+        # Test korrekt rotation af gearbox
+        self.engine.theGearbox.wheels['frontLeft'].orientation = 0
+        self.engine.theGearbox.currentGear = 5
+        self.engine.theGearbox.clutchEngaged = True
+        self.engine.updateModel(1)
+        self.assertEqual(self.engine.theGearbox.wheels['frontLeft'].orientation, 0)
 
 if __name__ == "__main__":
     unittest.main()
