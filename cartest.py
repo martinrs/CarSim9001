@@ -101,5 +101,42 @@ class EngineTester(unittest.TestCase):
         self.engine.updateModel(1)
         self.assertEqual(self.engine.theGearbox.wheels['frontLeft'].orientation, 0)
 
+class GearboxTester(unittest.TestCase):
+
+    def setUp(self):
+        self.gearbox = model.Gearbox()
+
+    def testInit(self):
+        self.assertIsInstance(self.gearbox.clutchEngaged, bool)
+        self.assertIn(0, self.gearbox.gears)
+        self.assertIn(0.8, self.gearbox.gears)
+        self.assertIn(1, self.gearbox.gears)
+        self.assertIn(1.4, self.gearbox.gears)
+        self.assertIn(2.2, self.gearbox.gears)
+        self.assertIn(3.8, self.gearbox.gears)
+        self.assertEqual(self.gearbox.currentGear, 0)
+        self.assertListEqual(['frontLeft', 'frontRight', 'rearLeft', 'rearRight'], list(self.gearbox.wheels.keys()))
+        for e in self.gearbox.wheels.values():
+            self.assertIsInstance(e, model.Wheel)
+
+    def testShiftUp(self):
+        self.assertEqual(self.gearbox.currentGear, 0)
+        for g in range(1, 6):
+            self.gearbox.shiftUp()
+            self.assertEqual(self.gearbox.currentGear, g)
+        self.gearbox.shiftUp()
+        self.assertEqual(self.gearbox.currentGear, 5)
+
+    def testShiftDown(self):
+        self.gearbox.currentGear = 5
+        for g in range(5, -1, -1):
+            self.assertEqual(self.gearbox.currentGear, g)
+            self.gearbox.shiftDown()
+        self.gearbox.shiftDown()
+        self.assertEqual(self.gearbox.currentGear, 0)
+
+    def testRotate(self):
+        
+
 if __name__ == "__main__":
     unittest.main()
