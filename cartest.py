@@ -1,5 +1,5 @@
 import unittest
-import model_done as model
+import model
 
 class TankTester(unittest.TestCase):
 
@@ -136,7 +136,17 @@ class GearboxTester(unittest.TestCase):
         self.assertEqual(self.gearbox.currentGear, 0)
 
     def testRotate(self):
-        
+        self.gearbox.rotate(1)
+        beforeRot = self.gearbox.wheels['frontLeft'].orientation
+        self.assertEqual(self.gearbox.wheels['frontLeft'].orientation, beforeRot)
+        self.gearbox.shiftUp()
+        self.gearbox.wheels['frontLeft'].orientation = 0
+        self.gearbox.rotate(1)
+        self.assertEqual(self.gearbox.wheels['frontLeft'].orientation, 0)
+        self.gearbox.wheels['frontLeft'].orientation = 0
+        self.gearbox.clutchEngaged = True
+        self.gearbox.rotate(1)
+        self.assertEqual(self.gearbox.wheels['frontLeft'].orientation, 360 * 0.8)
 
 if __name__ == "__main__":
     unittest.main()
