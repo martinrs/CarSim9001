@@ -24,7 +24,7 @@ class Gearbox(object):
 
     # Vi glemte koblingen!
     def shiftUp(self):
-        if self.currentGear < len(self.gears)-1:
+        if self.currentGear < len(self.gears)-1 and not self.clutchEngaged:
             self.currentGear = self.currentGear + 1
 
 class Tank(object):
