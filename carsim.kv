@@ -73,7 +73,7 @@
         max: 1
         step: 0.01
         orientation: 'vertical'
-        on_touch_up: root.theCar.theEngine.throttlePosition = slider.value
+        on_touch_move: root.theCar.theEngine.throttlePosition = slider.value
     Image:
         source: 'car-wheel.png'
         pos: self.parent.pos
