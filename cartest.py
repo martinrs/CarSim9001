@@ -41,7 +41,6 @@ class WheelTester(unittest.TestCase):
             self.assertTrue(self.wheel.orientation >= 0 and self.wheel.orientation <= 360, 'Wheel position out of bounds')
 
     def testRotate(self):
-        #self.wheel.orientation = 0
         beforeRot = self.wheel.orientation
         self.wheel.rotate(1)
         self.assertEqual(beforeRot, self.wheel.orientation)
