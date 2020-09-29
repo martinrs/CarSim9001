@@ -12,7 +12,7 @@ class CarSimApp(App):
 
     def build(self):
         self.theView = CarView()
-        Clock.schedule_interval(self.theView.tick, 1.0/30.0)
+        Clock.schedule_interval(self.theView.tick, 1.0/60.0)
         return self.theView
 
 class CarView(GridLayout):
