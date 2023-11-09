@@ -125,8 +125,13 @@ class GearboxTester(unittest.TestCase):
             self.assertEqual(self.gearbox.currentGear, g)
         self.gearbox.shiftUp()
         self.assertEqual(self.gearbox.currentGear, 5)
+        self.gearbox.currentGear = 3
+        self.gearbox.clutchEngaged = True
+        self.gearbox.shiftUp()
+        self.assertEqual(self.gearbox.currentGear, 3)
 
     def testShiftDown(self):
+        # ALARM! Tester ikke koblingen!
         self.gearbox.currentGear = 5
         for g in range(5, -1, -1):
             self.assertEqual(self.gearbox.currentGear, g)
