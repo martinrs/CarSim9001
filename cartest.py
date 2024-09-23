@@ -25,10 +25,10 @@ class TankTester(unittest.TestCase):
 
     def testRefuel(self):
         self.tank.refuel()
-        self.assertEqual(self.tank.capacity, 100)
+        self.assertEqual(self.tank.capacity, 500)
         self.tank.remove(50)
         self.tank.refuel()
-        self.assertEqual(self.tank.capacity, 100)
+        self.assertEqual(self.tank.capacity, 500)
 
 class WheelTester(unittest.TestCase):
 
