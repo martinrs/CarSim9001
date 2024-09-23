@@ -8,19 +8,19 @@ class TankTester(unittest.TestCase):
 
     def testInit(self):
         self.assertIsInstance(self.tank.capacity, int)
-        self.assertEqual(self.tank.capacity, 100)
+        self.assertEqual(self.tank.capacity, 500)
         self.assertIsInstance(self.tank.contents, int)
-        self.assertEqual(self.tank.contents, 100)
+        self.assertEqual(self.tank.contents, 500)
 
     def testRemove(self):
         toRemove = 50
         self.tank.remove(toRemove)
-        self.assertEqual(self.tank.capacity, 100)
+        self.assertEqual(self.tank.capacity, 500)
         self.assertEqual(self.tank.contents, self.tank.capacity - toRemove)
 
         self.tank.remove(toRemove)
         self.tank.remove(toRemove)
-        self.assertEqual(self.tank.capacity, 100)
+        self.assertEqual(self.tank.capacity, 500)
         self.assertEqual(self.tank.contents, 0)
 
     def testRefuel(self):
