@@ -79,7 +79,7 @@ class EngineTester(unittest.TestCase):
         self.engine.throttlePosition = 0.5
         self.engine.updateModel(60)
         self.assertEqual(self.engine.currentRpm, 50)
-        self.assertEqual(self.engine.theTank.contents, 99.875)
+        self.assertEqual(self.engine.theTank.contents, 499.875)
         # Test korrekt rotation af gearbox
         self.engine.theGearbox.wheels['frontLeft'].orientation = 0
         self.engine.theGearbox.currentGear = 5
