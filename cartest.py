@@ -15,11 +15,10 @@ class TankTester(unittest.TestCase):
     def testRemove(self):
         toRemove = 50
         self.tank.remove(toRemove)
-        self.assertEqual(self.tank.capacity, 500)
+        self.assertEqual(self.tank.capacity, 450)
         self.assertEqual(self.tank.contents, self.tank.capacity - toRemove)
 
-        self.tank.remove(toRemove)
-        self.tank.remove(toRemove)
+        self.tank.remove(10000)
         self.assertEqual(self.tank.capacity, 500)
         self.assertEqual(self.tank.contents, 0)
 
